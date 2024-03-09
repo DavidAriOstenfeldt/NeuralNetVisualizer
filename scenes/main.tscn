@@ -1,13 +1,15 @@
-[gd_scene load_steps=17 format=3 uid="uid://ds4jnon3g36mb"]
+[gd_scene load_steps=24 format=3 uid="uid://ds4jnon3g36mb"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_jclwk"]
 [ext_resource type="Shader" path="res://shaders/bokeh_paralax_background.gdshader" id="2_xgc46"]
 [ext_resource type="Shader" path="res://shaders/background_blur.gdshader" id="3_woc3a"]
+[ext_resource type="PackedScene" uid="uid://bm41bvekupoer" path="res://scenes/ui_components/add_layer_button.tscn" id="4_8mvuk"]
 [ext_resource type="PackedScene" uid="uid://6h1gka2gv0xq" path="res://scenes/ui_components/layer_container.tscn" id="4_q2aiv"]
+[ext_resource type="Script" path="res://scenes/ui_components/add_layer_button.gd" id="5_hdvju"]
 [ext_resource type="PackedScene" uid="uid://b14ce3o5wsgvq" path="res://scenes/ui_components/layer.tscn" id="5_vk2p8"]
 [ext_resource type="PackedScene" uid="uid://cpmfsb22goxyh" path="res://scenes/ui_components/neuron.tscn" id="6_gf26l"]
-[ext_resource type="PackedScene" uid="uid://bxeukdku503p4" path="res://scenes/ui_components/activation_layer.tscn" id="7_k8v3h"]
 [ext_resource type="PackedScene" uid="uid://7dteyllgdgmu" path="res://scenes/ui_components/ghost_neuron.tscn" id="7_spnx5"]
+[ext_resource type="PackedScene" uid="uid://cs1plvxc1vhos" path="res://scenes/ui_components/activation_button.tscn" id="8_mfg50"]
 
 [sub_resource type="Environment" id="Environment_kop0r"]
 background_mode = 3
@@ -36,6 +38,56 @@ shader_parameter/mix_amount = null
 shader_parameter/color_over = null
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n1a0s"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p7it3"]
+bg_color = Color(0, 0.678431, 0.709804, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_size = 3
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v8v6j"]
+bg_color = Color(4.81307e-07, 0.419766, 0.440075, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_size = 3
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ivc2o"]
+bg_color = Color(0, 0.678, 0.71, 0.25)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_size = 3
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6e0ey"]
+bg_color = Color(0.223529, 0.243137, 0.27451, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_size = 4
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_78vle"]
+bg_color = Color(0, 0.678431, 0.709804, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_size = 4
+shadow_offset = Vector2(0, 4)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cu6r2"]
 content_margin_left = 5.0
@@ -154,6 +206,44 @@ layout_mode = 2
 theme_override_constants/separation = 8
 theme_override_styles/separator = SubResource("StyleBoxEmpty_n1a0s")
 
+[node name="AddLayerContainer" type="HBoxContainer" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 75
+alignment = 1
+
+[node name="AddLayerButton" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/AddLayerContainer" instance=ExtResource("4_8mvuk")]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+theme_override_styles/hover = SubResource("StyleBoxFlat_p7it3")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_v8v6j")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ivc2o")
+script = ExtResource("5_hdvju")
+
+[node name="AddLayerButton2" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/AddLayerContainer" instance=ExtResource("4_8mvuk")]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+theme_override_styles/hover = SubResource("StyleBoxFlat_p7it3")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_v8v6j")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ivc2o")
+script = ExtResource("5_hdvju")
+
+[node name="AddLayerButton3" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/AddLayerContainer" instance=ExtResource("4_8mvuk")]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+theme_override_styles/hover = SubResource("StyleBoxFlat_p7it3")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_v8v6j")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ivc2o")
+script = ExtResource("5_hdvju")
+
+[node name="AddLayerButton4" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/AddLayerContainer" instance=ExtResource("4_8mvuk")]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+theme_override_styles/hover = SubResource("StyleBoxFlat_p7it3")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_v8v6j")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ivc2o")
+script = ExtResource("5_hdvju")
+
 [node name="LayerContainer" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer" instance=ExtResource("4_q2aiv")]
 unique_name_in_owner = true
 layout_mode = 2
@@ -191,9 +281,6 @@ layout_mode = 2
 [node name="GhostNeuron" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer/Layer" instance=ExtResource("7_spnx5")]
 layout_mode = 2
 
-[node name="ActivationLayer" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer" instance=ExtResource("7_k8v3h")]
-layout_mode = 2
-
 [node name="Layer2" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer" instance=ExtResource("5_vk2p8")]
 auto_translate_mode = 1
 layout_mode = 2
@@ -219,10 +306,6 @@ auto_translate_mode = 1
 layout_mode = 2
 
 [node name="GhostNeuron" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer/Layer2" instance=ExtResource("7_spnx5")]
-layout_mode = 2
-
-[node name="ActivationLayer2" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer" instance=ExtResource("7_k8v3h")]
-auto_translate_mode = 1
 layout_mode = 2
 
 [node name="Layer3" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer" instance=ExtResource("5_vk2p8")]
@@ -261,7 +344,45 @@ auto_translate_mode = 1
 layout_mode = 2
 is_input_or_output = true
 
-[node name="TrainButton" type="Button" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="BottomContainer" type="HBoxContainer" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer"]
+custom_minimum_size = Vector2(300, 25)
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(0.933333, 0.933333, 0.933333, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/background = SubResource("StyleBoxFlat_6e0ey")
+theme_override_styles/fill = SubResource("StyleBoxFlat_78vle")
+step = 1.0
+value = 42.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+alignment = 2
+
+[node name="Label" type="Label" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.933333, 0.933333, 0.933333, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.5)
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 10
+text = "Activation Function"
+horizontal_alignment = 1
+
+[node name="ActivationButton" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer/VBoxContainer" instance=ExtResource("8_mfg50")]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+selected = 0
+
+[node name="TrainButton" type="Button" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer"]
 custom_minimum_size = Vector2(100, 25)
 layout_mode = 2
 size_flags_horizontal = 8

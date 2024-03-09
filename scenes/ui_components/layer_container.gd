@@ -83,7 +83,6 @@ func on_neuron_pressed(neuron: NeuronButton) -> void:
 	if children < max_neurons_per_layer and not does_ghost_neuron_exist:
 		var ghost_neuron: GhostNeuronButton = ghost_neuron_scene.instantiate()
 		l.add_child(ghost_neuron)
-		ghost_neuron.neuron_pressed.connect(on_ghost_neuron_pressed)
 		ghost_neuron.layer_container = self
 		await get_tree().create_timer(0.05).timeout
 

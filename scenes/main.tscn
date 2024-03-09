@@ -1,0 +1,280 @@
+[gd_scene load_steps=17 format=3 uid="uid://ds4jnon3g36mb"]
+
+[ext_resource type="Script" path="res://scenes/main.gd" id="1_jclwk"]
+[ext_resource type="Shader" path="res://shaders/bokeh_paralax_background.gdshader" id="2_xgc46"]
+[ext_resource type="Shader" path="res://shaders/background_blur.gdshader" id="3_woc3a"]
+[ext_resource type="PackedScene" uid="uid://6h1gka2gv0xq" path="res://scenes/ui_components/layer_container.tscn" id="4_q2aiv"]
+[ext_resource type="PackedScene" uid="uid://b14ce3o5wsgvq" path="res://scenes/ui_components/layer.tscn" id="5_vk2p8"]
+[ext_resource type="PackedScene" uid="uid://cpmfsb22goxyh" path="res://scenes/ui_components/neuron.tscn" id="6_gf26l"]
+[ext_resource type="PackedScene" uid="uid://bxeukdku503p4" path="res://scenes/ui_components/activation_layer.tscn" id="7_k8v3h"]
+[ext_resource type="PackedScene" uid="uid://7dteyllgdgmu" path="res://scenes/ui_components/ghost_neuron.tscn" id="7_spnx5"]
+
+[sub_resource type="Environment" id="Environment_kop0r"]
+background_mode = 3
+ambient_light_source = 1
+reflected_light_source = 1
+glow_enabled = true
+adjustment_brightness = 1.62
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xsj3j"]
+shader = ExtResource("2_xgc46")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6w7rg"]
+bg_color = Color(0.133, 0.157, 0.192, 0.8)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_size = 3
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ub63a"]
+shader = ExtResource("3_woc3a")
+shader_parameter/blur_amount = 4.0
+shader_parameter/mix_amount = null
+shader_parameter/color_over = null
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n1a0s"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cu6r2"]
+content_margin_left = 5.0
+content_margin_top = 2.0
+content_margin_right = 5.0
+content_margin_bottom = 2.0
+bg_color = Color(2.5028e-06, 0.752938, 0.787498, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_size = 4
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i6xfn"]
+content_margin_left = 5.0
+content_margin_top = 2.0
+content_margin_right = 5.0
+content_margin_bottom = 2.0
+bg_color = Color(4.81307e-07, 0.419766, 0.440075, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_size = 4
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dfdpj"]
+content_margin_left = 5.0
+content_margin_top = 2.0
+content_margin_right = 5.0
+content_margin_bottom = 2.0
+bg_color = Color(0, 0.678431, 0.709804, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_size = 4
+shadow_offset = Vector2(0, 4)
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_jclwk")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_kop0r")
+
+[node name="Background" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_xsj3j")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.133333, 0.156863, 0.192157, 1)
+
+[node name="NetworkArchitecture" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -332.0
+offset_right = 332.0
+offset_bottom = 300.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="CenterContainer" type="CenterContainer" parent="NetworkArchitecture"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="NetworkArchitecture/CenterContainer"]
+custom_minimum_size = Vector2(600, 200)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6w7rg")
+
+[node name="BackgroundBlur" type="ColorRect" parent="NetworkArchitecture/CenterContainer/PanelContainer"]
+show_behind_parent = true
+material = SubResource("ShaderMaterial_ub63a")
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="NetworkArchitecture/CenterContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.933333, 0.933333, 0.933333, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 18
+text = "NEURAL NETWORK VISUALIZER"
+
+[node name="HSeparator" type="HSeparator" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+theme_override_styles/separator = SubResource("StyleBoxEmpty_n1a0s")
+
+[node name="LayerContainer" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer" instance=ExtResource("4_q2aiv")]
+unique_name_in_owner = true
+layout_mode = 2
+line_color = Color(0.933, 0.933, 0.933, 0.5)
+
+[node name="InputLayer" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer" instance=ExtResource("5_vk2p8")]
+layout_mode = 2
+
+[node name="Neuron2" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer/InputLayer" instance=ExtResource("6_gf26l")]
+layout_mode = 2
+is_input_or_output = true
+
+[node name="Neuron" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer/InputLayer" instance=ExtResource("6_gf26l")]
+layout_mode = 2
+is_input_or_output = true
+
+[node name="Layer" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer" instance=ExtResource("5_vk2p8")]
+layout_mode = 2
+
+[node name="Neuron" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer/Layer" instance=ExtResource("6_gf26l")]
+layout_mode = 2
+
+[node name="Neuron2" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer/Layer" instance=ExtResource("6_gf26l")]
+auto_translate_mode = 1
+layout_mode = 2
+
+[node name="Neuron3" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer/Layer" instance=ExtResource("6_gf26l")]
+auto_translate_mode = 1
+layout_mode = 2
+
+[node name="Neuron4" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer/Layer" instance=ExtResource("6_gf26l")]
+auto_translate_mode = 1
+layout_mode = 2
+
+[node name="GhostNeuron" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer/Layer" instance=ExtResource("7_spnx5")]
+layout_mode = 2
+
+[node name="ActivationLayer" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer" instance=ExtResource("7_k8v3h")]
+layout_mode = 2
+
+[node name="Layer2" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer" instance=ExtResource("5_vk2p8")]
+auto_translate_mode = 1
+layout_mode = 2
+
+[node name="Neuron" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer/Layer2" instance=ExtResource("6_gf26l")]
+auto_translate_mode = 1
+layout_mode = 2
+
+[node name="Neuron2" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer/Layer2" instance=ExtResource("6_gf26l")]
+auto_translate_mode = 1
+layout_mode = 2
+
+[node name="Neuron3" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer/Layer2" instance=ExtResource("6_gf26l")]
+auto_translate_mode = 1
+layout_mode = 2
+
+[node name="Neuron4" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer/Layer2" instance=ExtResource("6_gf26l")]
+auto_translate_mode = 1
+layout_mode = 2
+
+[node name="Neuron5" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer/Layer2" instance=ExtResource("6_gf26l")]
+auto_translate_mode = 1
+layout_mode = 2
+
+[node name="GhostNeuron" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer/Layer2" instance=ExtResource("7_spnx5")]
+layout_mode = 2
+
+[node name="ActivationLayer2" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer" instance=ExtResource("7_k8v3h")]
+auto_translate_mode = 1
+layout_mode = 2
+
+[node name="Layer3" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer" instance=ExtResource("5_vk2p8")]
+auto_translate_mode = 1
+layout_mode = 2
+
+[node name="Neuron" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer/Layer3" instance=ExtResource("6_gf26l")]
+auto_translate_mode = 1
+layout_mode = 2
+
+[node name="Neuron2" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer/Layer3" instance=ExtResource("6_gf26l")]
+auto_translate_mode = 1
+layout_mode = 2
+
+[node name="Neuron3" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer/Layer3" instance=ExtResource("6_gf26l")]
+auto_translate_mode = 1
+layout_mode = 2
+
+[node name="Neuron4" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer/Layer3" instance=ExtResource("6_gf26l")]
+auto_translate_mode = 1
+layout_mode = 2
+
+[node name="GhostNeuron" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer/Layer3" instance=ExtResource("7_spnx5")]
+layout_mode = 2
+
+[node name="OutputLayer" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer" instance=ExtResource("5_vk2p8")]
+layout_mode = 2
+
+[node name="Neuron" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer/OutputLayer" instance=ExtResource("6_gf26l")]
+auto_translate_mode = 1
+layout_mode = 2
+is_input_or_output = true
+
+[node name="Neuron2" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer/OutputLayer" instance=ExtResource("6_gf26l")]
+auto_translate_mode = 1
+layout_mode = 2
+is_input_or_output = true
+
+[node name="TrainButton" type="Button" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 25)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+focus_mode = 0
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.933333, 0.933333, 0.933333, 1)
+theme_override_colors/font_focus_color = Color(0.933333, 0.933333, 0.933333, 1)
+theme_override_colors/font_pressed_color = Color(0.933333, 0.933333, 0.933333, 1)
+theme_override_colors/font_hover_color = Color(0.933333, 0.933333, 0.933333, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.933333, 0.933333, 0.933333, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/hover = SubResource("StyleBoxFlat_cu6r2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_i6xfn")
+theme_override_styles/normal = SubResource("StyleBoxFlat_dfdpj")
+text = "BEGIN TRAINING"

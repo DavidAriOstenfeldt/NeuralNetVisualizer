@@ -2,12 +2,17 @@
 extends HBoxContainer
 class_name LayerContainer
 
+signal layer_removed
+
 var layer_scene: PackedScene = preload("res://scenes/ui_components/layer.tscn")
 var ghost_neuron_scene: PackedScene = preload("res://scenes/ui_components/ghost_neuron.tscn")
 var layers: Array = []
 var listen_for_notifications: bool = false
 var neuron_scene: PackedScene
 
+@export var add_layer_container: AddLayerContainer
+
+@export var max_layers: int = 5
 @export var max_neurons_per_layer: int = 7
 
 @export var draw_lines: bool = false:
@@ -32,13 +37,12 @@ var neuron_scene: PackedScene
 		activate_draw_connections()
 
 
-
 func _ready() -> void:
 	await get_tree().create_timer(0.1).timeout
 	draw_lines = true
 	await get_tree().create_timer(0.1).timeout
 	listen_for_notifications = true
-
+	layer_removed.connect(add_layer_container.on_layer_removed)
 
 func activate_draw_connections():
 	if draw_lines:
@@ -89,6 +93,7 @@ func on_neuron_pressed(neuron: NeuronButton) -> void:
 	if children == 0:
 		l.queue_free()
 		await l.tree_exited
+		layer_removed.emit()
 
 	await get_tree().create_timer(0.05).timeout
 	
@@ -122,6 +127,35 @@ func create_line(start_pos:Vector2, end_pos:Vector2) -> void:
 	line.add_point(line.to_local(end_pos + Vector2.ONE*neuron_size/2))
 	line.width = line_width
 	line.default_color = line_color
+
+func add_layer() -> void:
+	layers = get_layers()
+	if layers.size() < max_layers+2:
+		var _output_layer = layers[-1]
+		layers.remove_at(-1)
+		remove_child(_output_layer)
+		var layer = layer_scene.instantiate()
+		add_child(layer)
+		layers.append(layer)
+		add_child(_output_layer)
+		layers.append(_output_layer)
+		var ghost_neuron = ghost_neuron_scene.instantiate()
+		ghost_neuron.layer_container = self
+		layer.add_child(ghost_neuron)
+		
+		for i in range(2):
+			on_ghost_neuron_pressed(ghost_neuron)
+	
+
+func remove_layer() -> void:
+	layers = get_layers()
+	if layers.size() > 2:
+		var layer = layers[-2]
+		layers.remove_at(-2)
+		for child in layer.get_children():
+			if child is NeuronButton:
+				on_neuron_pressed(child)
+		
 
 
 func get_layers() -> Array:

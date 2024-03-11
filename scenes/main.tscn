@@ -1,11 +1,10 @@
-[gd_scene load_steps=24 format=3 uid="uid://ds4jnon3g36mb"]
+[gd_scene load_steps=20 format=3 uid="uid://ds4jnon3g36mb"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_jclwk"]
 [ext_resource type="Shader" path="res://shaders/bokeh_paralax_background.gdshader" id="2_xgc46"]
 [ext_resource type="Shader" path="res://shaders/background_blur.gdshader" id="3_woc3a"]
-[ext_resource type="PackedScene" uid="uid://bm41bvekupoer" path="res://scenes/ui_components/add_layer_button.tscn" id="4_8mvuk"]
+[ext_resource type="PackedScene" uid="uid://bgy8210ux1qct" path="res://scenes/ui_components/add_layer_container.tscn" id="4_pwekt"]
 [ext_resource type="PackedScene" uid="uid://6h1gka2gv0xq" path="res://scenes/ui_components/layer_container.tscn" id="4_q2aiv"]
-[ext_resource type="Script" path="res://scenes/ui_components/add_layer_button.gd" id="5_hdvju"]
 [ext_resource type="PackedScene" uid="uid://b14ce3o5wsgvq" path="res://scenes/ui_components/layer.tscn" id="5_vk2p8"]
 [ext_resource type="PackedScene" uid="uid://cpmfsb22goxyh" path="res://scenes/ui_components/neuron.tscn" id="6_gf26l"]
 [ext_resource type="PackedScene" uid="uid://7dteyllgdgmu" path="res://scenes/ui_components/ghost_neuron.tscn" id="7_spnx5"]
@@ -38,36 +37,6 @@ shader_parameter/mix_amount = null
 shader_parameter/color_over = null
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n1a0s"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p7it3"]
-bg_color = Color(0, 0.678431, 0.709804, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-shadow_color = Color(0, 0, 0, 0.25)
-shadow_size = 3
-shadow_offset = Vector2(0, 3)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v8v6j"]
-bg_color = Color(4.81307e-07, 0.419766, 0.440075, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-shadow_color = Color(0, 0, 0, 0.25)
-shadow_size = 3
-shadow_offset = Vector2(0, 3)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ivc2o"]
-bg_color = Color(0, 0.678, 0.71, 0.25)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-shadow_color = Color(0, 0, 0, 0.25)
-shadow_size = 3
-shadow_offset = Vector2(0, 3)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6e0ey"]
 bg_color = Color(0.223529, 0.243137, 0.27451, 1)
@@ -206,47 +175,15 @@ layout_mode = 2
 theme_override_constants/separation = 8
 theme_override_styles/separator = SubResource("StyleBoxEmpty_n1a0s")
 
-[node name="AddLayerContainer" type="HBoxContainer" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="AddLayerContainer" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer" node_paths=PackedStringArray("layer_container") instance=ExtResource("4_pwekt")]
+layout_mode = 2
+layer_container = NodePath("../LayerContainer")
+
+[node name="LayerContainer" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer" node_paths=PackedStringArray("add_layer_container") instance=ExtResource("4_q2aiv")]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/separation = 75
-alignment = 1
-
-[node name="AddLayerButton" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/AddLayerContainer" instance=ExtResource("4_8mvuk")]
-custom_minimum_size = Vector2(20, 20)
-layout_mode = 2
-theme_override_styles/hover = SubResource("StyleBoxFlat_p7it3")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_v8v6j")
-theme_override_styles/normal = SubResource("StyleBoxFlat_ivc2o")
-script = ExtResource("5_hdvju")
-
-[node name="AddLayerButton2" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/AddLayerContainer" instance=ExtResource("4_8mvuk")]
-custom_minimum_size = Vector2(20, 20)
-layout_mode = 2
-theme_override_styles/hover = SubResource("StyleBoxFlat_p7it3")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_v8v6j")
-theme_override_styles/normal = SubResource("StyleBoxFlat_ivc2o")
-script = ExtResource("5_hdvju")
-
-[node name="AddLayerButton3" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/AddLayerContainer" instance=ExtResource("4_8mvuk")]
-custom_minimum_size = Vector2(20, 20)
-layout_mode = 2
-theme_override_styles/hover = SubResource("StyleBoxFlat_p7it3")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_v8v6j")
-theme_override_styles/normal = SubResource("StyleBoxFlat_ivc2o")
-script = ExtResource("5_hdvju")
-
-[node name="AddLayerButton4" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/AddLayerContainer" instance=ExtResource("4_8mvuk")]
-custom_minimum_size = Vector2(20, 20)
-layout_mode = 2
-theme_override_styles/hover = SubResource("StyleBoxFlat_p7it3")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_v8v6j")
-theme_override_styles/normal = SubResource("StyleBoxFlat_ivc2o")
-script = ExtResource("5_hdvju")
-
-[node name="LayerContainer" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer" instance=ExtResource("4_q2aiv")]
-unique_name_in_owner = true
-layout_mode = 2
+add_layer_container = NodePath("../AddLayerContainer")
+max_layers = 5
 line_color = Color(0.933, 0.933, 0.933, 0.5)
 
 [node name="InputLayer" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer" instance=ExtResource("5_vk2p8")]

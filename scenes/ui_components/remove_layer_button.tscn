@@ -1,6 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://bm41bvekupoer"]
+[gd_scene load_steps=5 format=3 uid="uid://dabed8bbwo21r"]
 
-[ext_resource type="Script" path="res://scenes/ui_components/add_layer_button.gd" id="1_66yd1"]
+[ext_resource type="Script" path="res://scenes/ui_components/remove_layer_button.gd" id="1_ynxel"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_svmtp"]
 bg_color = Color(0, 0.678431, 0.709804, 1)
@@ -32,7 +32,7 @@ shadow_color = Color(0, 0, 0, 0.25)
 shadow_size = 3
 shadow_offset = Vector2(0, 3)
 
-[node name="AddLayerButton" type="Button"]
+[node name="RemoveLayerButton" type="Button"]
 auto_translate_mode = 1
 custom_minimum_size = Vector2(20, 20)
 size_flags_horizontal = 4
@@ -48,7 +48,7 @@ theme_override_font_sizes/font_size = 12
 theme_override_styles/hover = SubResource("StyleBoxFlat_svmtp")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_pfnh5")
 theme_override_styles/normal = SubResource("StyleBoxFlat_w65ye")
-text = "+"
-script = ExtResource("1_66yd1")
+text = "-"
+script = ExtResource("1_ynxel")
 
 [connection signal="pressed" from="." to="." method="_on_pressed"]

@@ -18,10 +18,11 @@ func sigmoid(x: Matrix):
 		x.data[i] = 1 / (1 + exp(-x.data[i]))
 	return x
 
-func sigmoid_derivative(x: Matrix): 
-    var ones_matrix = Matrix(x.rows, x.cols)
-    for i in range(ones_matrix.length()):
-        ones_matrix.data[i] = 1
+func sigmoid_derivative(x: Matrix):
+	var ones_data: Array = []
+	for i in range(x.length()):
+		ones_data.append(1)
+	var ones_matrix = Matrix.new(x.rows, x.cols, ones_data)
 	return sigmoid(x).dot(ones_matrix.subtract(sigmoid(x)))
 
 func ReLU(x: Matrix):
@@ -30,9 +31,9 @@ func ReLU(x: Matrix):
 	return x
 
 func ReLU_derivative(x: Matrix):
-    for i in range(x.length()):
-        if x.data[i] > 0:
-            x.data[i] = 1
-        else:
-            x.data[i] = 0
-    return x
+	for i in range(x.length()):
+		if x.data[i] > 0:
+			x.data[i] = 1
+		else:
+			x.data[i] = 0
+	return x

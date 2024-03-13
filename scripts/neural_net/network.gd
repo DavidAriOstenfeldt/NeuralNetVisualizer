@@ -65,7 +65,10 @@ func train(input: Matrix, target: Matrix, epochs: int, learning_rate: float) -> 
 	
 	if thread.is_alive():
 		thread.wait_to_finish()
-
+	
+	if thread.is_started():
+		thread.wait_to_finish()
+	
 	thread.start(train_thread.bind(input, target, epochs, learning_rate))
 
 
@@ -100,6 +103,7 @@ func train_thread(input: Matrix, target: Matrix, epochs: int, learning_rate: flo
 		print("Epoch: ", epoch+1, " Loss: ", epoch_loss / num_samples)
 	
 	training_completed.emit()
+	return
 
 
 func _exit_tree():

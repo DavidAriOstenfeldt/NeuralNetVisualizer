@@ -13,6 +13,9 @@ func _ready() -> void:
 func set_weight(weight: float) -> void:
 	text = str(snappedf(weight, 0.01))
 
+func get_weight() -> float:
+	return float(text)
+
 func _on_pressed() -> void:
 	if is_input_or_output:
 		return

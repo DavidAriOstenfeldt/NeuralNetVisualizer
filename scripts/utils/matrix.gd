@@ -173,6 +173,11 @@ func dot(other):
 		push_error("Invalid input for Matrix.dot, second argument must be a scalar or a Matrix")
 		return null
 	
+	# Scalar-Vector/Matrix product
+	if self.shape() == [1, 1] and other.shape() != [1, 1]:
+		return other.multiply_by_scalar(data[0])
+
+
 	# Inner product (both vectors)
 	if (rows == 1 or cols == 1) and (other.rows == 1 or other.cols == 1):
 		var _length: int = self.length()
@@ -187,6 +192,7 @@ func dot(other):
 			return result_matrix
 		
 		if _length != other.length():
+			print(self.shape(), other.shape())
 			push_error("Invalid input for Matrix.dot, vectors must have the same length")
 			return null
 		
@@ -198,6 +204,7 @@ func dot(other):
 
 	# Matrix-Matrix product
 	if cols != other.rows:
+		print(cols, other.rows)
 		push_error("Invalid input for Matrix.multiply, number of columns in first matrix must be equal to number of rows in second matrix")
 		return null
 

@@ -130,9 +130,10 @@ func create_line(start_pos:Vector2, end_pos:Vector2) -> void:
 
 func add_layer() -> void:
 	layers = get_layers()
-	if layers.size() < max_layers+2:
-		var _output_layer = layers[-1]
-		layers.remove_at(-1)
+	var num_layers = layers.size()
+	if num_layers < max_layers+2:
+		var _output_layer = layers[num_layers-1]
+		layers.remove_at(num_layers-1)
 		remove_child(_output_layer)
 		var layer = layer_scene.instantiate()
 		add_child(layer)
@@ -149,14 +150,28 @@ func add_layer() -> void:
 
 func remove_layer() -> void:
 	layers = get_layers()
-	if layers.size() > 2:
-		var layer = layers[-2]
-		layers.remove_at(-2)
+	var num_layers = layers.size()
+	if num_layers > 2:
+		var layer = layers[num_layers-2]
+		layers.remove_at(num_layers-2)
 		for child in layer.get_children():
 			if child is NeuronButton:
 				on_neuron_pressed(child)
 		
 
+func get_neurons_in_layer(layer: VBoxContainer) -> Array:
+	var neurons = []
+	for child in layer.get_children():
+		if child is NeuronButton:
+			neurons.append(child)
+	return neurons
+
+func get_weights_in_layer(layer: VBoxContainer) -> Array:
+	var weights = []
+	for child in layer.get_children():
+		if child is NeuronButton:
+			weights.append(child.get_weight())
+	return weights
 
 func get_layers() -> Array:
 	var _layers = []
@@ -165,3 +180,16 @@ func get_layers() -> Array:
 		if child is VBoxContainer:
 			_layers.append(child)
 	return _layers
+
+
+func input_completed(weights: Array[Array]) -> void:
+	layers = get_layers()
+	for i in range(layers.size()):
+		if i == 0:
+			continue
+		var layer = layers[i]
+		var neurons = get_neurons_in_layer(layer)
+		for j in range(neurons.size()):
+			neurons[j].set_weight(weights[i][j])
+
+	activate_draw_connections()

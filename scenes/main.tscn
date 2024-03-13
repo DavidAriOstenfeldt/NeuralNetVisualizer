@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://ds4jnon3g36mb"]
+[gd_scene load_steps=21 format=3 uid="uid://ds4jnon3g36mb"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_jclwk"]
 [ext_resource type="Shader" path="res://shaders/bokeh_paralax_background.gdshader" id="2_xgc46"]
@@ -9,6 +9,10 @@
 [ext_resource type="PackedScene" uid="uid://cpmfsb22goxyh" path="res://scenes/ui_components/neuron.tscn" id="6_gf26l"]
 [ext_resource type="PackedScene" uid="uid://7dteyllgdgmu" path="res://scenes/ui_components/ghost_neuron.tscn" id="7_spnx5"]
 [ext_resource type="PackedScene" uid="uid://cs1plvxc1vhos" path="res://scenes/ui_components/activation_button.tscn" id="8_mfg50"]
+[ext_resource type="PackedScene" uid="uid://cfs7d6u62hbii" path="res://scenes/ui_components/learning_rate_button.tscn" id="9_hiu0s"]
+[ext_resource type="PackedScene" uid="uid://dlfmh6jui238b" path="res://scenes/ui_components/epochs_button.tscn" id="10_heli1"]
+[ext_resource type="PackedScene" uid="uid://ddcdkhovmybxv" path="res://scenes/ui_components/train_button.tscn" id="12_2tbxp"]
+[ext_resource type="PackedScene" uid="uid://dj48v7eph68ip" path="res://scenes/networks/fc_network.tscn" id="13_i3p1h"]
 
 [sub_resource type="Environment" id="Environment_kop0r"]
 background_mode = 3
@@ -58,48 +62,6 @@ shadow_color = Color(0, 0, 0, 0.25)
 shadow_size = 4
 shadow_offset = Vector2(0, 4)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cu6r2"]
-content_margin_left = 5.0
-content_margin_top = 2.0
-content_margin_right = 5.0
-content_margin_bottom = 2.0
-bg_color = Color(2.5028e-06, 0.752938, 0.787498, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-shadow_color = Color(0, 0, 0, 0.25)
-shadow_size = 4
-shadow_offset = Vector2(0, 4)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i6xfn"]
-content_margin_left = 5.0
-content_margin_top = 2.0
-content_margin_right = 5.0
-content_margin_bottom = 2.0
-bg_color = Color(4.81307e-07, 0.419766, 0.440075, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-shadow_color = Color(0, 0, 0, 0.25)
-shadow_size = 4
-shadow_offset = Vector2(0, 4)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dfdpj"]
-content_margin_left = 5.0
-content_margin_top = 2.0
-content_margin_right = 5.0
-content_margin_bottom = 2.0
-bg_color = Color(0, 0.678431, 0.709804, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-shadow_color = Color(0, 0, 0, 0.25)
-shadow_size = 4
-shadow_offset = Vector2(0, 4)
-
 [node name="Main" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -110,6 +72,13 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_jclwk")
+
+[node name="FCNetwork" parent="." node_paths=PackedStringArray("layer_container", "learning_rate_button", "epochs_button", "activation_function_button", "train_button") instance=ExtResource("13_i3p1h")]
+layer_container = NodePath("../NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer")
+learning_rate_button = NodePath("../NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer/LearningRateContainer/LearningRateButton")
+epochs_button = NodePath("../NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer/EpochContainer/EpochsButton")
+activation_function_button = NodePath("../NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer/ActivationFunctionContainer/ActivationButton")
+train_button = NodePath("../NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer/TrainButton")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_kop0r")
@@ -183,17 +152,16 @@ layer_container = NodePath("../LayerContainer")
 unique_name_in_owner = true
 layout_mode = 2
 add_layer_container = NodePath("../AddLayerContainer")
-max_layers = 5
 line_color = Color(0.933, 0.933, 0.933, 0.5)
 
 [node name="InputLayer" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer" instance=ExtResource("5_vk2p8")]
 layout_mode = 2
 
-[node name="Neuron2" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer/InputLayer" instance=ExtResource("6_gf26l")]
+[node name="Neuron" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer/InputLayer" instance=ExtResource("6_gf26l")]
 layout_mode = 2
 is_input_or_output = true
 
-[node name="Neuron" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer/InputLayer" instance=ExtResource("6_gf26l")]
+[node name="Neuron2" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer/InputLayer" instance=ExtResource("6_gf26l")]
 layout_mode = 2
 is_input_or_output = true
 
@@ -276,11 +244,6 @@ auto_translate_mode = 1
 layout_mode = 2
 is_input_or_output = true
 
-[node name="Neuron2" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer/OutputLayer" instance=ExtResource("6_gf26l")]
-auto_translate_mode = 1
-layout_mode = 2
-is_input_or_output = true
-
 [node name="BottomContainer" type="HBoxContainer" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
@@ -290,6 +253,7 @@ alignment = 2
 [node name="ProgressBar" type="ProgressBar" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer"]
 custom_minimum_size = Vector2(300, 25)
 layout_mode = 2
+size_flags_horizontal = 8
 size_flags_vertical = 8
 theme_override_colors/font_color = Color(0.933333, 0.933333, 0.933333, 1)
 theme_override_font_sizes/font_size = 12
@@ -298,12 +262,51 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_78vle")
 step = 1.0
 value = 42.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer"]
+[node name="LearningRateContainer" type="VBoxContainer" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer/LearningRateContainer"]
+auto_translate_mode = 1
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(0.933333, 0.933333, 0.933333, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.5)
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 10
+text = "Learning Rate"
+horizontal_alignment = 1
+
+[node name="LearningRateButton" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer/LearningRateContainer" instance=ExtResource("9_hiu0s")]
+layout_mode = 2
+
+[node name="EpochContainer" type="VBoxContainer" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer"]
+auto_translate_mode = 1
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+alignment = 2
+
+[node name="Label" type="Label" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer/EpochContainer"]
+auto_translate_mode = 1
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(0.933333, 0.933333, 0.933333, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.5)
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 10
+text = "Epochs"
+horizontal_alignment = 1
+
+[node name="EpochsButton" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer/EpochContainer" instance=ExtResource("10_heli1")]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="ActivationFunctionContainer" type="VBoxContainer" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 alignment = 2
 
-[node name="Label" type="Label" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer/ActivationFunctionContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0.933333, 0.933333, 0.933333, 1)
@@ -313,26 +316,11 @@ theme_override_font_sizes/font_size = 10
 text = "Activation Function"
 horizontal_alignment = 1
 
-[node name="ActivationButton" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer/VBoxContainer" instance=ExtResource("8_mfg50")]
+[node name="ActivationButton" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer/ActivationFunctionContainer" instance=ExtResource("8_mfg50")]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 selected = 0
 
-[node name="TrainButton" type="Button" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer"]
-custom_minimum_size = Vector2(100, 25)
+[node name="TrainButton" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer" instance=ExtResource("12_2tbxp")]
 layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 8
-focus_mode = 0
-theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
-theme_override_colors/font_color = Color(0.933333, 0.933333, 0.933333, 1)
-theme_override_colors/font_focus_color = Color(0.933333, 0.933333, 0.933333, 1)
-theme_override_colors/font_pressed_color = Color(0.933333, 0.933333, 0.933333, 1)
-theme_override_colors/font_hover_color = Color(0.933333, 0.933333, 0.933333, 1)
-theme_override_colors/font_hover_pressed_color = Color(0.933333, 0.933333, 0.933333, 1)
-theme_override_font_sizes/font_size = 12
-theme_override_styles/hover = SubResource("StyleBoxFlat_cu6r2")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_i6xfn")
-theme_override_styles/normal = SubResource("StyleBoxFlat_dfdpj")
-text = "BEGIN TRAINING"

@@ -1,5 +1,8 @@
 class_name Network
 
+signal epoch_completed()
+signal input_completed(outputs: Array[Array])
+
 @export var num_layers: int = 0
 var loss: String = "Mean Squared Error"
 var layers: Array[Layer] = []
@@ -30,7 +33,7 @@ func add_layer(layer: Layer) -> void:
 		self.fc_layers.append(layer)
 	
 
-func set_loss(loss_type: String) -> void:
+func set_loss(loss_type: String = 'Mean Squared Error') -> void:
 	if loss_type == "Mean Squared Error":
 		loss_function = func (y_true: Matrix, y_pred: Matrix): return losses.mse(y_pred, y_true)
 		loss_derivative = func (y_true: Matrix, y_pred: Matrix): return losses.mse_derivative(y_pred, y_true)
@@ -59,10 +62,12 @@ func train(input: Matrix, target: Matrix, epochs: int, learning_rate: float) -> 
 	for epoch in range(epochs):
 		var epoch_loss: float = 0.0
 		for i in range(num_samples):
+			var outputs: Array[Array] = []
 			# Forward pass
 			var output = input.get_row(i)
 			for layer in layers:
 				output = layer.forward_propogation(output)
+				outputs.append(output.data)
 			
 			var current_loss = loss_function.call(target.get_row(0), output)
 			epoch_loss += current_loss
@@ -73,5 +78,8 @@ func train(input: Matrix, target: Matrix, epochs: int, learning_rate: float) -> 
 			layers_reversed.reverse()
 			for layer in layers_reversed:
 				error = layer.backward_propogation(error, learning_rate)
+			
+			input_completed.emit(outputs)
 		
-		print("Epoch: ", epoch, " Loss: ", epoch_loss / num_samples)
+		epoch_completed.emit()
+		print("Epoch: ", epoch+1, " Loss: ", epoch_loss / num_samples)

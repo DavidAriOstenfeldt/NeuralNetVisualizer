@@ -1,7 +1,7 @@
 class_name FCNetwork extends Node
 
 # Printing
-@export var printing: bool = true
+@export var printing: bool = false
 
 # Get references
 @export var layer_container: LayerContainer
@@ -102,10 +102,12 @@ func _ready() -> void:
 			
 		net.add_layer(FCLayer.new(num_neurons_in_layer[i+1], num_neurons_in_layer[i+2]))
 		if i < num_layers-3:
-			print("Activation: ", activation_function)
+			if printing:
+				print("Activation: ", activation_function)
 			net.add_layer(ActivationLayer.new(act_func))
 		else: # Output layer activation
-			print("Activation: ", "sigmoid")
+			if printing:
+				print("Activation: ", "sigmoid")
 			net.add_layer(ActivationLayer.new(Activation.ACTIVATION_FUNCTIONS.SIGMOID))
 
 	net.input_completed.connect(layer_container.input_completed)	

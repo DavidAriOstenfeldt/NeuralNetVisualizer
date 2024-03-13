@@ -19,7 +19,7 @@ func sigmoid(x: Matrix):
 	return x
 
 func sigmoid_derivative(x: Matrix):
-	var ones_data: Array = []
+	var ones_data: Array[float] = []
 	for i in range(x.length()):
 		ones_data.append(1)
 	var ones_matrix = Matrix.new(x.rows, x.cols, ones_data)

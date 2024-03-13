@@ -10,6 +10,8 @@ var layers: Array = []
 var listen_for_notifications: bool = false
 var neuron_scene: PackedScene
 
+var neurons: Array[NeuronButton] = []
+
 @export var add_layer_container: AddLayerContainer
 
 @export var max_layers: int = 5
@@ -159,12 +161,12 @@ func remove_layer() -> void:
 				on_neuron_pressed(child)
 		
 
-func get_neurons_in_layer(layer: VBoxContainer) -> Array:
-	var neurons = []
+func get_neurons_in_layer(layer: VBoxContainer) -> Array[NeuronButton]:
+	var _neurons: Array[NeuronButton] = []
 	for child in layer.get_children():
 		if child is NeuronButton:
-			neurons.append(child)
-	return neurons
+			_neurons.append(child)
+	return _neurons
 
 func get_weights_in_layer(layer: VBoxContainer) -> Array:
 	var weights = []
@@ -182,14 +184,16 @@ func get_layers() -> Array:
 	return _layers
 
 
-func input_completed(weights: Array[Array]) -> void:
-	layers = get_layers()
-	for i in range(layers.size()):
-		if i == 0:
-			continue
-		var layer = layers[i]
-		var neurons = get_neurons_in_layer(layer)
-		for j in range(neurons.size()):
-			neurons[j].set_weight(weights[i][j])
+func set_weights_in_layer(layer: VBoxContainer, weights: Array) -> void:
+	neurons = get_neurons_in_layer(layer)
+	for i in range(neurons.size()):
+		neurons[i].set_weight(weights[i])
 
-	activate_draw_connections()
+
+func input_completed(weights: Array[Array]) -> void:
+	# layers = call_deferred("get_layers")
+	for i in range(layers.size()):
+		var layer = layers[i]
+		call_deferred_thread_group("set_weights_in_layer", layer, weights[i])
+
+	# activate_draw_connections()

@@ -1,7 +1,8 @@
 class_name Network
 
-signal epoch_completed()
+signal epoch_completed(outputs: Array[Array])
 signal input_completed(outputs: Array[Array])
+signal training_completed()
 
 @export var num_layers: int = 0
 var loss: String = "Mean Squared Error"
@@ -11,6 +12,8 @@ var fc_layers: Array[FCLayer] = []
 var losses = LossFunction.new()
 var loss_function = null
 var loss_derivative = null
+
+var thread: Thread
 
 func get_layer(layer:int) -> Layer:
 	return layers[layer]
@@ -57,14 +60,26 @@ func predict(input:Matrix):
 
 # Training loop
 func train(input: Matrix, target: Matrix, epochs: int, learning_rate: float) -> void:
+	if thread == null:
+		thread = Thread.new()
+	
+	if thread.is_alive():
+		thread.wait_to_finish()
+
+	thread.start(train_thread.bind(input, target, epochs, learning_rate))
+
+
+func train_thread(input: Matrix, target: Matrix, epochs: int, learning_rate: float) -> void:
 	var num_samples: int = input.shape()[0]
 	
 	for epoch in range(epochs):
 		var epoch_loss: float = 0.0
+		var outputs_epoch: Array[Array] = []
+		var outputs: Array[Array] = []
 		for i in range(num_samples):
-			var outputs: Array[Array] = []
 			# Forward pass
 			var output = input.get_row(i)
+			outputs = [output.data]
 			for layer in layers:
 				output = layer.forward_propogation(output)
 				outputs.append(output.data)
@@ -80,6 +95,12 @@ func train(input: Matrix, target: Matrix, epochs: int, learning_rate: float) -> 
 				error = layer.backward_propogation(error, learning_rate)
 			
 			input_completed.emit(outputs)
-		
-		epoch_completed.emit()
+		outputs_epoch.append(outputs)
+		epoch_completed.emit(outputs_epoch)
 		print("Epoch: ", epoch+1, " Loss: ", epoch_loss / num_samples)
+	
+	training_completed.emit()
+
+
+func _exit_tree():
+	thread.wait_to_finish()

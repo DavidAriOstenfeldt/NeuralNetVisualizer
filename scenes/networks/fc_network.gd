@@ -11,6 +11,7 @@ class_name FCNetwork extends Node
 @export var activation_function_button: ActivationButton
 @export var train_button: TrainButton
 @export var train_progress_bar: ProgressBar
+@export var epoch_label: Label
 
 
 # Training data
@@ -81,7 +82,7 @@ func setup_network():
 	loss = 'Mean Squared Error'
 	activation_function = ''
 	train_progress_bar.set_value(0)
-	train_progress_bar.set_text("Epoch: 0 Loss: 0.0")
+	epoch_label.text = "Epoch: 0 Loss: 0.0"
 	train_progress_bar.set_max(epochs)
 
 	# Get parameters
@@ -159,7 +160,7 @@ func train_network():
 
 func epoch_completed(epoch: int, _loss: float, _outputs:Array[float]):
 	train_progress_bar.set_value(epoch)
-	train_progress_bar.set_text("Epoch: " + str(epoch) + " Loss: " + str(_loss))
+	epoch_label.text = "Epoch: " + str(epoch) + " Loss: " + str(_loss)
 
 func training_completed():
 	call_deferred_thread_group("set_mouse_filter")

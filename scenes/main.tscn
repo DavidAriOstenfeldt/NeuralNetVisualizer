@@ -73,13 +73,14 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_jclwk")
 
-[node name="FCNetwork" parent="." node_paths=PackedStringArray("stop_layer", "layer_container", "learning_rate_button", "epochs_button", "activation_function_button", "train_button") instance=ExtResource("13_i3p1h")]
+[node name="FCNetwork" parent="." node_paths=PackedStringArray("stop_layer", "layer_container", "learning_rate_button", "epochs_button", "activation_function_button", "train_button", "train_progress_bar") instance=ExtResource("13_i3p1h")]
 stop_layer = NodePath("../NetworkArchitecture/StopLayer")
 layer_container = NodePath("../NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer")
 learning_rate_button = NodePath("../NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer/LearningRateContainer/LearningRateButton")
 epochs_button = NodePath("../NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer/EpochContainer/EpochsButton")
 activation_function_button = NodePath("../NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer/ActivationFunctionContainer/ActivationButton")
 train_button = NodePath("../NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer/TrainButton")
+train_progress_bar = NodePath("../NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer/ProgressBarContainer/ProgressBar")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_kop0r")
@@ -251,7 +252,21 @@ layout_mode = 2
 theme_override_constants/separation = 10
 alignment = 2
 
-[node name="ProgressBar" type="ProgressBar" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer"]
+[node name="ProgressBarContainer" type="VBoxContainer" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="EpochLabel" type="Label" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer/ProgressBarContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.933333, 0.933333, 0.933333, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.25)
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 10
+text = "Epoch: 0 Loss: 0.0"
+vertical_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer/ProgressBarContainer"]
 custom_minimum_size = Vector2(300, 25)
 layout_mode = 2
 size_flags_horizontal = 8
@@ -265,6 +280,7 @@ value = 42.0
 
 [node name="LearningRateContainer" type="VBoxContainer" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer"]
 layout_mode = 2
+size_flags_vertical = 8
 
 [node name="Label" type="Label" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer/LearningRateContainer"]
 auto_translate_mode = 1

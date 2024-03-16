@@ -1,6 +1,6 @@
 class_name Network
 
-signal epoch_completed(outputs: Array[Array])
+signal epoch_completed(epoch: int, loss: float, outputs: Array[Array])
 signal input_completed(outputs: Array[Array])
 signal training_completed()
 
@@ -87,6 +87,7 @@ func train_thread(input: Matrix, target: Matrix, epochs: int, learning_rate: flo
 				output = layer.forward_propogation(output)
 				outputs.append(output.data)
 			
+			input_completed.emit(outputs)
 			var current_loss = loss_function.call(target.get_row(0), output)
 			epoch_loss += current_loss
 			
@@ -97,9 +98,9 @@ func train_thread(input: Matrix, target: Matrix, epochs: int, learning_rate: flo
 			for layer in layers_reversed:
 				error = layer.backward_propogation(error, learning_rate)
 			
-			input_completed.emit(outputs)
+			
 		outputs_epoch.append(outputs)
-		epoch_completed.emit(outputs_epoch)
+		epoch_completed.emit(epoch+1, epoch_loss/num_samples, outputs_epoch)
 		print("Epoch: ", epoch+1, " Loss: ", epoch_loss / num_samples)
 	
 	training_completed.emit()

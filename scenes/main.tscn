@@ -74,7 +74,6 @@ size_flags_vertical = 3
 script = ExtResource("1_jclwk")
 
 [node name="FCNetwork" parent="." node_paths=PackedStringArray("stop_layer", "layer_container", "learning_rate_button", "epochs_button", "activation_function_button", "train_button") instance=ExtResource("13_i3p1h")]
-printing = true
 stop_layer = NodePath("../NetworkArchitecture/StopLayer")
 layer_container = NodePath("../NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer")
 learning_rate_button = NodePath("../NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer/LearningRateContainer/LearningRateButton")

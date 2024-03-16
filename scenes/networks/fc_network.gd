@@ -10,6 +10,7 @@ class_name FCNetwork extends Node
 @export var epochs_button: EpochsButton
 @export var activation_function_button: ActivationButton
 @export var train_button: TrainButton
+@export var train_progress_bar: ProgressBar
 
 
 # Training data
@@ -58,6 +59,10 @@ func _ready() -> void:
 		push_error("Train button not found")
 		return
 	
+	if train_progress_bar == null:
+		push_error("Train progress bar not found")
+		return
+	
 	# Connect signals
 	train_button.train_button_pressed.connect(train_network)
 
@@ -75,6 +80,9 @@ func setup_network():
 	num_layers = 0
 	loss = 'Mean Squared Error'
 	activation_function = ''
+	train_progress_bar.set_value(0)
+	train_progress_bar.set_text("Epoch: 0 Loss: 0.0")
+	train_progress_bar.set_max(epochs)
 
 	# Get parameters
 	learning_rate = learning_rate_button.get_learning_rate()
@@ -132,6 +140,7 @@ func setup_network():
 
 	net.input_completed.connect(layer_container.input_completed)
 	net.training_completed.connect(training_completed)
+	net.epoch_completed.connect(epoch_completed)
 
 func get_layers():
 	return net.layers
@@ -147,6 +156,10 @@ func train_network():
 	setup_network()
 	net.set_loss(loss)
 	net.train(x_train, y_train, epochs, learning_rate)
+
+func epoch_completed(epoch: int, _loss: float, _outputs:Array[float]):
+	train_progress_bar.set_value(epoch)
+	train_progress_bar.set_text("Epoch: " + str(epoch) + " Loss: " + str(_loss))
 
 func training_completed():
 	call_deferred_thread_group("set_mouse_filter")

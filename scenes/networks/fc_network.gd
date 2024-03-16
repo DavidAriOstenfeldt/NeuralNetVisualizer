@@ -4,6 +4,7 @@ class_name FCNetwork extends Node
 @export var printing: bool = false
 
 # Get references
+@export var stop_layer: PanelContainer
 @export var layer_container: LayerContainer
 @export var learning_rate_button: LearningRateButton
 @export var epochs_button: EpochsButton
@@ -29,8 +30,14 @@ var neurons: Array[Array] = []
 var activation_function: String = ''
 var act_func: Activation.ACTIVATION_FUNCTIONS
 
+var buttons_to_enable: Array = []
+
 func _ready() -> void:
 	# Safety checks
+	if stop_layer == null:
+		push_error("Stop layer not found")
+		return
+
 	if layer_container == null:
 		push_error("Layer container not found")
 		return
@@ -68,7 +75,6 @@ func setup_network():
 	num_layers = 0
 	loss = 'Mean Squared Error'
 	activation_function = ''
-
 
 	# Get parameters
 	learning_rate = learning_rate_button.get_learning_rate()
@@ -124,8 +130,8 @@ func setup_network():
 				print("Activation: ", "sigmoid")
 			net.add_layer(ActivationLayer.new(Activation.ACTIVATION_FUNCTIONS.SIGMOID))
 
-	net.input_completed.connect(layer_container.input_completed)	
-
+	net.input_completed.connect(layer_container.input_completed)
+	net.training_completed.connect(training_completed)
 
 func get_layers():
 	return net.layers
@@ -137,9 +143,19 @@ func get_weights_in_layer(layer: int):
 	return net.get_weights_in_layer(layer)
 
 func train_network():
+	set_mouse_filter()
 	setup_network()
 	net.set_loss(loss)
 	net.train(x_train, y_train, epochs, learning_rate)
+
+func training_completed():
+	call_deferred_thread_group("set_mouse_filter")
+
+func set_mouse_filter():
+	if stop_layer.mouse_filter == Control.MOUSE_FILTER_IGNORE:
+		stop_layer.mouse_filter = Control.MOUSE_FILTER_STOP
+	else:
+		stop_layer.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 func test_network():
 	var out = net.predict(x_train)

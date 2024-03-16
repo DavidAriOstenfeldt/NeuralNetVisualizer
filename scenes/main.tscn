@@ -73,8 +73,9 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_jclwk")
 
-[node name="FCNetwork" parent="." node_paths=PackedStringArray("layer_container", "learning_rate_button", "epochs_button", "activation_function_button", "train_button") instance=ExtResource("13_i3p1h")]
+[node name="FCNetwork" parent="." node_paths=PackedStringArray("stop_layer", "layer_container", "learning_rate_button", "epochs_button", "activation_function_button", "train_button") instance=ExtResource("13_i3p1h")]
 printing = true
+stop_layer = NodePath("../NetworkArchitecture/StopLayer")
 layer_container = NodePath("../NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer")
 learning_rate_button = NodePath("../NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer/LearningRateContainer/LearningRateButton")
 epochs_button = NodePath("../NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer/EpochContainer/EpochsButton")
@@ -325,3 +326,8 @@ selected = 0
 
 [node name="TrainButton" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer" instance=ExtResource("12_2tbxp")]
 layout_mode = 2
+
+[node name="StopLayer" type="PanelContainer" parent="NetworkArchitecture"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+mouse_filter = 2

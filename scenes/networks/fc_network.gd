@@ -83,7 +83,7 @@ func setup_network():
 	activation_function = ''
 	train_progress_bar.set_value(0)
 	epoch_label.text = "Epoch: 0 Loss: 0.0"
-	train_progress_bar.set_max(epochs)
+	
 
 	# Get parameters
 	learning_rate = learning_rate_button.get_learning_rate()
@@ -91,6 +91,7 @@ func setup_network():
 	layers = layer_container.get_layers()
 	num_layers = layers.size()
 	activation_function = activation_function_button.get_activation_function().to_lower()
+	train_progress_bar.set_max(epochs)
 	match activation_function:
 		'sigmoid':
 			act_func = Activation.ACTIVATION_FUNCTIONS.SIGMOID
@@ -158,7 +159,10 @@ func train_network():
 	net.set_loss(loss)
 	net.train(x_train, y_train, epochs, learning_rate)
 
-func epoch_completed(epoch: int, _loss: float, _outputs:Array[float]):
+func epoch_completed(epoch: int, _loss: float, _outputs:Array[Array]):
+	call_deferred_thread_group("update_progress", epoch, _loss)
+
+func update_progress(epoch: int, _loss: float):
 	train_progress_bar.set_value(epoch)
 	epoch_label.text = "Epoch: " + str(epoch) + " Loss: " + str(_loss)
 

@@ -73,7 +73,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_jclwk")
 
-[node name="FCNetwork" parent="." node_paths=PackedStringArray("stop_layer", "layer_container", "learning_rate_button", "epochs_button", "activation_function_button", "train_button", "train_progress_bar") instance=ExtResource("13_i3p1h")]
+[node name="FCNetwork" parent="." node_paths=PackedStringArray("stop_layer", "layer_container", "learning_rate_button", "epochs_button", "activation_function_button", "train_button", "train_progress_bar", "epoch_label") instance=ExtResource("13_i3p1h")]
 stop_layer = NodePath("../NetworkArchitecture/StopLayer")
 layer_container = NodePath("../NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer")
 learning_rate_button = NodePath("../NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer/LearningRateContainer/LearningRateButton")
@@ -81,6 +81,7 @@ epochs_button = NodePath("../NetworkArchitecture/CenterContainer/PanelContainer/
 activation_function_button = NodePath("../NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer/ActivationFunctionContainer/ActivationButton")
 train_button = NodePath("../NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer/TrainButton")
 train_progress_bar = NodePath("../NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer/ProgressBarContainer/ProgressBar")
+epoch_label = NodePath("../NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer/ProgressBarContainer/EpochLabel")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_kop0r")

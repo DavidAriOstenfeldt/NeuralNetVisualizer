@@ -54,6 +54,22 @@ func _ready() -> void:
 	# Connect signals
 	train_button.train_button_pressed.connect(train_network)
 
+	# Setup network
+	setup_network()
+
+
+func setup_network():
+	# Clear previous network
+	epochs = 1
+	learning_rate = 0.1
+	num_neurons_in_layer.clear()
+	neurons.clear()
+	layers.clear()
+	num_layers = 0
+	loss = 'Mean Squared Error'
+	activation_function = ''
+
+
 	# Get parameters
 	learning_rate = learning_rate_button.get_learning_rate()
 	epochs = epochs_button.get_epochs()
@@ -85,9 +101,7 @@ func _ready() -> void:
 		print("Layer objects: ", layers)
 		print("Neuron objects: ", neurons)
 
-	# Create network
 	net = Network.new()
-
 
 	# Add layers and activation functions
 	# Input layer
@@ -123,6 +137,7 @@ func get_weights_in_layer(layer: int):
 	return net.get_weights_in_layer(layer)
 
 func train_network():
+	setup_network()
 	net.set_loss(loss)
 	net.train(x_train, y_train, epochs, learning_rate)
 

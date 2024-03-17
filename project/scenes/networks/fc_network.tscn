@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dj48v7eph68ip"]
+
+[ext_resource type="Script" path="res://project/scenes/networks/fc_network.gd" id="1_jxmmd"]
+
+[node name="FCNetwork" type="Node"]
+script = ExtResource("1_jxmmd")

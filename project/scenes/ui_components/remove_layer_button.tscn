@@ -1,0 +1,54 @@
+[gd_scene load_steps=5 format=3 uid="uid://dabed8bbwo21r"]
+
+[ext_resource type="Script" path="res://project/scenes/ui_components/remove_layer_button.gd" id="1_ynxel"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_svmtp"]
+bg_color = Color(0, 0.678431, 0.709804, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_size = 3
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pfnh5"]
+bg_color = Color(4.81307e-07, 0.419766, 0.440075, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_size = 3
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w65ye"]
+bg_color = Color(0, 0.678, 0.71, 0.25)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_size = 3
+shadow_offset = Vector2(0, 3)
+
+[node name="RemoveLayerButton" type="Button"]
+auto_translate_mode = 1
+custom_minimum_size = Vector2(20, 20)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_mode = 0
+theme_override_colors/font_disabled_color = Color(0.933333, 0.933333, 0.933333, 1)
+theme_override_colors/font_color = Color(0.933, 0.933, 0.933, 0.25)
+theme_override_colors/font_focus_color = Color(0.933333, 0.933333, 0.933333, 1)
+theme_override_colors/font_pressed_color = Color(0.933333, 0.933333, 0.933333, 1)
+theme_override_colors/font_hover_color = Color(0.933333, 0.933333, 0.933333, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.933333, 0.933333, 0.933333, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/hover = SubResource("StyleBoxFlat_svmtp")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_pfnh5")
+theme_override_styles/normal = SubResource("StyleBoxFlat_w65ye")
+text = "-"
+script = ExtResource("1_ynxel")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://c5u7c7o67obfb"]
+
+[ext_resource type="Script" path="res://project/scenes/ui_components/scatter_plot.gd" id="1_085ye"]
+[ext_resource type="PackedScene" uid="uid://dlwq4kmdb3bhs" path="res://project/addons/easy_charts/control_charts/chart.tscn" id="2_mb0ym"]
+
+[node name="ScatterPlot" type="Control"]
+auto_translate_mode = 1
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_085ye")
+
+[node name="Chart" parent="." instance=ExtResource("2_mb0ym")]
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 1
+grow_horizontal = 2
+grow_vertical = 2

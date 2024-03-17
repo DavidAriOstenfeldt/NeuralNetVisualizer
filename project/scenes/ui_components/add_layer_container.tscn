@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://bgy8210ux1qct"]
+
+[ext_resource type="Script" path="res://project/scenes/ui_components/add_layer_container.gd" id="1_0au7q"]
+[ext_resource type="PackedScene" uid="uid://dabed8bbwo21r" path="res://project/scenes/ui_components/remove_layer_button.tscn" id="2_dhh7x"]
+[ext_resource type="PackedScene" uid="uid://bm41bvekupoer" path="res://project/scenes/ui_components/add_layer_button.tscn" id="3_shkfh"]
+
+[node name="AddLayerContainer" type="HBoxContainer"]
+auto_translate_mode = 1
+theme_override_constants/separation = 75
+alignment = 1
+script = ExtResource("1_0au7q")
+
+[node name="RemoveLayerButton" parent="." instance=ExtResource("2_dhh7x")]
+layout_mode = 2
+
+[node name="AddLayerButton" parent="." instance=ExtResource("3_shkfh")]
+layout_mode = 2

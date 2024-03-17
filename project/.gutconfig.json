@@ -1,0 +1,12 @@
+{
+    "dirs":[
+        "res://project/test/"
+    ],
+    "include_subdirs":true,
+    "ignore_pause":false,
+    "prefix":"test_",
+    "suffix":".gd",
+    "log_level":2,
+    "should_exit":false,
+    "should_maximize":true
+}

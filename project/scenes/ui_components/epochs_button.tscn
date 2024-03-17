@@ -1,0 +1,90 @@
+[gd_scene load_steps=5 format=3 uid="uid://dlfmh6jui238b"]
+
+[ext_resource type="Script" path="res://project/scenes/ui_components/epochs_button.gd" id="1_awhgr"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w5vfj"]
+content_margin_left = 5.0
+content_margin_top = 2.0
+content_margin_right = 5.0
+content_margin_bottom = 2.0
+bg_color = Color(2.5028e-06, 0.752938, 0.787498, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_size = 4
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ns3bw"]
+content_margin_left = 5.0
+content_margin_top = 2.0
+content_margin_right = 5.0
+content_margin_bottom = 2.0
+bg_color = Color(4.81307e-07, 0.419766, 0.440075, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_size = 4
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qx7an"]
+content_margin_left = 5.0
+content_margin_top = 2.0
+content_margin_right = 5.0
+content_margin_bottom = 2.0
+bg_color = Color(0, 0.678431, 0.709804, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_size = 4
+shadow_offset = Vector2(0, 4)
+
+[node name="EpochsButton" type="OptionButton"]
+auto_translate_mode = 1
+z_index = 1
+custom_minimum_size = Vector2(50, 25)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -12.5
+offset_right = 25.0
+offset_bottom = 12.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+focus_mode = 0
+theme_override_colors/font_color = Color(0.933333, 0.933333, 0.933333, 1)
+theme_override_colors/font_focus_color = Color(0.933333, 0.933333, 0.933333, 1)
+theme_override_colors/font_pressed_color = Color(0.933333, 0.933333, 0.933333, 1)
+theme_override_colors/font_hover_color = Color(0.933333, 0.933333, 0.933333, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.933333, 0.933333, 0.933333, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/hover = SubResource("StyleBoxFlat_w5vfj")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ns3bw")
+theme_override_styles/normal = SubResource("StyleBoxFlat_qx7an")
+alignment = 1
+selected = 3
+fit_to_longest_item = false
+item_count = 5
+popup/item_0/text = "50"
+popup/item_0/id = 0
+popup/item_1/text = "100"
+popup/item_1/id = 1
+popup/item_2/text = "250"
+popup/item_2/id = 2
+popup/item_3/text = "500"
+popup/item_3/id = 3
+popup/item_4/text = "1000"
+popup/item_4/id = 4
+script = ExtResource("1_awhgr")
+
+[connection signal="item_selected" from="." to="." method="_on_item_selected"]

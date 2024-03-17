@@ -30,7 +30,6 @@ var __y: Array
 var name: String
 var props: Dictionary = {}
 
-@warning_ignore("shadowed_variable")
 func _init(x: Array, y: Array, name: String = "", props: Dictionary = {}) -> void:
 	self.__x = x.duplicate()
 	self.__y = y.duplicate()

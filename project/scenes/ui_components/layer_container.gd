@@ -5,10 +5,10 @@ class_name LayerContainer
 signal layer_removed
 
 var layer_scene: PackedScene = preload("res://project/scenes/ui_components/layer.tscn")
+var neuron_scene: PackedScene = preload("res://project/scenes/ui_components/neuron.tscn")
 var ghost_neuron_scene: PackedScene = preload("res://project/scenes/ui_components/ghost_neuron.tscn")
 var layers: Array = []
 var listen_for_notifications: bool = false
-var neuron_scene: PackedScene
 
 var neurons: Array[NeuronButton] = []
 

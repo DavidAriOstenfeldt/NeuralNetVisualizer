@@ -11,7 +11,7 @@ var dataset : Array = []
 func _init(datamatrix : ChartMatrix, headers : PackedStringArray = [], labels : PackedStringArray = [] , table_name : String = "") -> void:
 	if datamatrix.is_empty(): datamatrix.resize(labels.size(), headers.size())
 	if labels.is_empty() : for label in range(datamatrix.get_size().x) : labels.append(label as String)
-	if headers.is_empty() : for header in range(datamatrix.get_size().y) : headers.append(MatrixGenerator.get_letter_index(header))
+	if headers.is_empty() : for header in range(datamatrix.get_size().y) : headers.append(ChartMatrixGenerator.get_letter_index(header))
 	build_dataframe(datamatrix, headers, labels, table_name)
 
 func build_dataframe(datamatrix : ChartMatrix, headers : PackedStringArray = [], labels : PackedStringArray = [] , table_name : String = "") -> void:
@@ -32,7 +32,7 @@ func build_dataset(data : Array, headers : PackedStringArray, labels : PackedStr
 
 func insert_column(column : Array, header : String = "", index : int = dataset[0].size() - 1) -> void:
 	assert(column.size() == (datamatrix.rows() if not datamatrix.is_empty() else labels.size())) #,"error: the column size must match the dataset column size")
-	headers.insert(index, header if header != "" else MatrixGenerator.get_letter_index(index))
+	headers.insert(index, header if header != "" else ChartMatrixGenerator.get_letter_index(index))
 	datamatrix.insert_column(column, index)
 	dataset = build_dataset_from_matrix(datamatrix, headers, labels)
 
@@ -53,7 +53,7 @@ func get_labels() -> PackedStringArray:
 	return labels
 
 func transpose():
-	build_dataframe(MatrixGenerator.transpose(datamatrix), labels, headers, table_name)
+	build_dataframe(ChartMatrixGenerator.transpose(datamatrix), labels, headers, table_name)
 
 func _to_string() -> String:
 	var last_string_len : int
@@ -101,7 +101,7 @@ func columns(headers : PackedStringArray) -> ChartMatrix:
 	var values : Array = []
 	for header in headers:
 		values.append(get_column(header))
-	return MatrixGenerator.transpose(ChartMatrix.new(values))
+	return ChartMatrixGenerator.transpose(ChartMatrix.new(values))
 
 
 # Get a column by its index

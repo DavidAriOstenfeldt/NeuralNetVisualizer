@@ -12,8 +12,6 @@ func _init(_input_size:int, _output_size:int, _weights=[]) -> void:
 
 	# Initialize the weights and biases
 	# TODO: Smarter initialization - maybe parameterize the initialization
-	# TODO: Something is wrong with the initialization of matrices
-	# Somehow, the matrices are being initialized twice
 	var weight_data: Array[float] = []
 	var bias_data: Array[float] = []
 	if _weights.size() == 0:

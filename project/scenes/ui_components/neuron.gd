@@ -1,7 +1,7 @@
 extends Button
 class_name NeuronButton
 
-@onready var base_stylebox: StyleBoxFlat = get_theme_stylebox("normal")
+@onready var base_stylebox: StyleBoxFlat = get_theme_stylebox("normal").duplicate()
 @onready var layer_container: LayerContainer = get_parent().get_parent()
 @export var is_input_or_output: bool = false
 

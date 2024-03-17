@@ -1,6 +1,6 @@
 @tool
 extends RefCounted
-class_name MatrixGenerator
+class_name ChartMatrixGenerator
 
 static func zeros(rows: int, columns: int) -> ChartMatrix:
 	var zeros: Array = []
@@ -11,7 +11,7 @@ static func zeros(rows: int, columns: int) -> ChartMatrix:
 		zeros.append(t_rows.duplicate())
 	return ChartMatrix.new(zeros)
 
-# Generates a Matrix with random values between [from; to] with a given @size (rows, columns)
+# Generates a ChartMatrix with random values between [from; to] with a given @size (rows, columns)
 static func random_float_range(from : float, to : float, size : Vector2, _seed : int = 1234) -> ChartMatrix:
 	seed(_seed)
 	randomize()
@@ -22,13 +22,13 @@ static func random_float_range(from : float, to : float, size : Vector2, _seed :
 		array.append(matrix_row)
 	return ChartMatrix.new(array)
 
-# Generates a Matrix giving an Array (Array must by Array[Array])
+# Generates a ChartMatrix giving an Array (Array must by Array[Array])
 static func from_array(array : Array = []) -> ChartMatrix:
 	var matrix : Array = []
 	matrix.append(array)
 	return ChartMatrix.new(matrix)
 
-# Generates a sub-Matrix giving a Matrix, a @from Array [row_i, column_i] and a @to Array [row_j, column_j]
+# Generates a sub-ChartMatrix giving a ChartMatrix, a @from Array [row_i, column_i] and a @to Array [row_j, column_j]
 static func sub_matrix(_matrix : ChartMatrix, from : PackedInt32Array, to : PackedInt32Array) -> ChartMatrix:
 	assert( not (to[0] > _matrix.rows() or to[1] > _matrix.columns()), 
 		"%s is not an acceptable size for the submatrix, giving a matrix of size %s"%[to, _matrix.get_size()])
@@ -38,7 +38,7 @@ static func sub_matrix(_matrix : ChartMatrix, from : PackedInt32Array, to : Pack
 		array.append(row.slice(from[1], to[1]))
 	return ChartMatrix.new(array)
 
-# Duplicates a given Matrix
+# Duplicates a given ChartMatrix
 static func duplicate(_matrix : ChartMatrix) -> ChartMatrix:
 	return ChartMatrix.new(_matrix.to_array().duplicate())
 
@@ -68,7 +68,7 @@ static func determinant(matrix: ChartMatrix) -> float:
 	return determinant
 
 
-# Calculate the inverse of a Matrix
+# Calculate the inverse of a ChartMatrix
 static func inverse(matrix: ChartMatrix) -> ChartMatrix:
 	var inverse: ChartMatrix
 	
@@ -91,7 +91,7 @@ static func inverse(matrix: ChartMatrix) -> ChartMatrix:
 	
 	return inverse
 
-# Transpose a given Matrix
+# Transpose a given ChartMatrix
 static func transpose(_matrix : ChartMatrix) -> ChartMatrix:
 	var array : Array = []
 	array.resize(_matrix.get_size().y)
@@ -104,7 +104,7 @@ static func transpose(_matrix : ChartMatrix) -> ChartMatrix:
 			array[j][i] = (_matrix.to_array()[i][j])
 	return ChartMatrix.new(array)
 
-# Calculates the dot product (A*B) matrix between two Matrixes
+# Calculates the dot product (A*B) matrix between two ChartMatrixes
 static func dot(_matrix1 : ChartMatrix, _matrix2 : ChartMatrix) -> ChartMatrix:
 	if _matrix1.get_size().y != _matrix2.get_size().x: 
 		printerr("matrix1 number of columns: %s must be the same as matrix2 number of rows: %s"%[_matrix1.get_size().y, _matrix2.get_size().x])
@@ -120,7 +120,7 @@ static func dot(_matrix1 : ChartMatrix, _matrix2 : ChartMatrix) -> ChartMatrix:
 		array.append(row)
 	return ChartMatrix.new(array)
 
-# Calculates the hadamard (element-wise product) between two Matrixes
+# Calculates the hadamard (element-wise product) between two ChartMatrixes
 static func hadamard(_matrix1 : ChartMatrix, _matrix2 : ChartMatrix) -> ChartMatrix:
 	if _matrix1.get_size() != _matrix2.get_size(): 
 		printerr("matrix1 size: %s must be the same as matrix2 size: %s"%[_matrix1.get_size(), _matrix2.get_size()])
@@ -129,12 +129,12 @@ static func hadamard(_matrix1 : ChartMatrix, _matrix2 : ChartMatrix) -> ChartMat
 	for x in range(_matrix1.to_array().size()):
 		var row : Array = []
 		for y in range(_matrix1.to_array()[x].size()):
-			assert(typeof(_matrix1.to_array()[x][y]) != TYPE_STRING and typeof(_matrix2.to_array()[x][y]) != TYPE_STRING) #,"can't apply operations over a Matrix of Strings")
+			assert(typeof(_matrix1.to_array()[x][y]) != TYPE_STRING and typeof(_matrix2.to_array()[x][y]) != TYPE_STRING) #,"can't apply operations over a ChartMatrix of Strings")
 			row.append(_matrix1.to_array()[x][y] * _matrix2.to_array()[x][y])
 		array.append(row)
 	return ChartMatrix.new(array)
 
-# Multiply a given Matrix for an int value
+# Multiply a given ChartMatrix for an int value
 static func multiply_int(_matrix1 : ChartMatrix, _int : int) -> ChartMatrix:
 	var array : Array = _matrix1.to_array().duplicate()
 	for x in range(_matrix1.to_array().size()):
@@ -143,7 +143,7 @@ static func multiply_int(_matrix1 : ChartMatrix, _int : int) -> ChartMatrix:
 			array[x][y] = int(array[x][y])
 	return ChartMatrix.new(array)
 
-# Multiply a given Matrix for a float value
+# Multiply a given ChartMatrix for a float value
 static func multiply_float(_matrix1 : ChartMatrix, _float : float) -> ChartMatrix:
 	var array : Array = _matrix1.to_array().duplicate()
 	for x in range(_matrix1.to_array().size()):

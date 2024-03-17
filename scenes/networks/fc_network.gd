@@ -13,8 +13,13 @@ class_name FCNetwork extends Node
 @export var train_progress_bar: ProgressBar
 @export var epoch_label: Label
 
+@onready var scattter_plot: ScatterPlot = %ScatterPlot
+@onready var data_set_option_button: OptionButton = %DataSetOptionButton
+@onready var samples_spin_box: SpinBox = %SamplesSpinBox
+@onready var noise_slider: HSlider = %NoiseSlider
 
 # Training data
+var data: ToyData
 var train_data: Array[float] = [0., 0., 0., 1., 1., 0., 1., 1.]
 var x_train: Matrix = Matrix.new(4, 2, train_data)
 var label_data: Array[float] = [0., 0., 1., 1.]
@@ -179,3 +184,21 @@ func test_network():
 	var out = net.predict(x_train)
 	out.print()
  
+func create_data(data_type: String, samples: int, noise: float):
+	if data_type == 'Half Circles':
+		data = HalfCirclesData.new()
+		data.generate(samples, noise)
+
+	scattter_plot.create_chart(data.data, data.labels, data_type, "X", "Y")
+
+	# Training data
+	train_data = data.data.data
+	x_train = Matrix.new(samples, 2, train_data)
+	label_data = data.labels.data
+	y_train = Matrix.new(samples, 1, label_data)
+
+func _on_generate_data_button_pressed() -> void:
+	var data_type = data_set_option_button.get_item_text(data_set_option_button.get_selected())
+	var samples = samples_spin_box.get_value()
+	var noise = noise_slider.get_value()
+	create_data(data_type, samples, noise)

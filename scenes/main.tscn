@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://ds4jnon3g36mb"]
+[gd_scene load_steps=28 format=3 uid="uid://ds4jnon3g36mb"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_jclwk"]
 [ext_resource type="Shader" path="res://shaders/bokeh_paralax_background.gdshader" id="2_xgc46"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://dlfmh6jui238b" path="res://scenes/ui_components/epochs_button.tscn" id="10_heli1"]
 [ext_resource type="PackedScene" uid="uid://ddcdkhovmybxv" path="res://scenes/ui_components/train_button.tscn" id="12_2tbxp"]
 [ext_resource type="PackedScene" uid="uid://dj48v7eph68ip" path="res://scenes/networks/fc_network.tscn" id="13_i3p1h"]
+[ext_resource type="PackedScene" uid="uid://c5u7c7o67obfb" path="res://scenes/ui_components/scatter_plot.tscn" id="14_1cdyb"]
 
 [sub_resource type="Environment" id="Environment_kop0r"]
 background_mode = 3
@@ -91,6 +92,48 @@ shadow_size = 4
 shadow_offset = Vector2(0, 4)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eamgd"]
+content_margin_left = 5.0
+content_margin_top = 2.0
+content_margin_right = 5.0
+content_margin_bottom = 2.0
+bg_color = Color(0, 0.678431, 0.709804, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_size = 4
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kigk4"]
+content_margin_left = 5.0
+content_margin_top = 2.0
+content_margin_right = 5.0
+content_margin_bottom = 2.0
+bg_color = Color(2.5028e-06, 0.752938, 0.787498, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_size = 4
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pom0n"]
+content_margin_left = 5.0
+content_margin_top = 2.0
+content_margin_right = 5.0
+content_margin_bottom = 2.0
+bg_color = Color(4.81307e-07, 0.419766, 0.440075, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_size = 4
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_32wbq"]
 content_margin_left = 5.0
 content_margin_top = 2.0
 content_margin_right = 5.0
@@ -452,7 +495,8 @@ text = "Data set"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="OptionButton" type="OptionButton" parent="Data/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/DataSetContainer"]
+[node name="DataSetOptionButton" type="OptionButton" parent="Data/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/DataSetContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_outline_color = Color(0.933333, 0.933333, 0.933333, 1)
 theme_override_colors/font_disabled_color = Color(0.933333, 0.933333, 0.933333, 1)
@@ -481,11 +525,58 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.25)
 theme_override_constants/shadow_offset_y = 2
 theme_override_font_sizes/font_size = 12
 text = "Samples"
-horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SpinBox" type="SpinBox" parent="Data/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/SamplesContainer"]
+[node name="SamplesSpinBox" type="SpinBox" parent="Data/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/SamplesContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 max_value = 50000.0
 value = 10000.0
 update_on_text_changed = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Data/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/SamplesContainer"]
+layout_mode = 2
+
+[node name="Noise" type="Label" parent="Data/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/SamplesContainer/HBoxContainer"]
+auto_translate_mode = 1
+layout_mode = 2
+theme_override_colors/font_color = Color(0.933333, 0.933333, 0.933333, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.25)
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 12
+text = "Noise"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NoiseSlider" type="HSlider" parent="Data/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/SamplesContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+value = 0.1
+
+[node name="GenerateDataButton" type="Button" parent="Data/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(75, 25)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_mode = 0
+theme_override_colors/font_disabled_color = Color(0.933333, 0.933333, 0.933333, 1)
+theme_override_colors/font_color = Color(0.933333, 0.933333, 0.933333, 1)
+theme_override_colors/font_focus_color = Color(0.933333, 0.933333, 0.933333, 1)
+theme_override_colors/font_pressed_color = Color(0.933333, 0.933333, 0.933333, 1)
+theme_override_colors/font_hover_color = Color(0.933333, 0.933333, 0.933333, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.933333, 0.933333, 0.933333, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/hover = SubResource("StyleBoxFlat_kigk4")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_pom0n")
+theme_override_styles/normal = SubResource("StyleBoxFlat_32wbq")
+text = "Generate"
+
+[node name="ScatterPlot" parent="Data/CenterContainer/PanelContainer/MarginContainer/VBoxContainer" instance=ExtResource("14_1cdyb")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[connection signal="pressed" from="Data/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/GenerateDataButton" to="FCNetwork" method="_on_generate_data_button_pressed"]

@@ -25,6 +25,4 @@ func generate(samples: int, noise:float, radius: float=1.0):
     data = Matrix.new(samples, 2, matrix_data)
     labels = Matrix.new(samples, 1, label_data)
 
-func get_samples(batch_size: int, shuffle: bool = true):
-    pass
 

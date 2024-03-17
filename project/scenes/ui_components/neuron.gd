@@ -21,7 +21,7 @@ func _process(_delta: float) -> void:
 		return
 
 	emission_power = lerp(emission_power, abs(weight), 0.1)
-	current_color_rgb = base_color_rgb.map(func(x): return x * (1.0 + emission_power))
+	current_color_rgb = base_color_rgb.map(func(x): return x * (1.0 + emission_power * 2.0))
 	self_modulate = Color(current_color_rgb[0], current_color_rgb[1], current_color_rgb[2], 1.0)
 
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://ds4jnon3g36mb"]
+[gd_scene load_steps=24 format=3 uid="uid://ds4jnon3g36mb"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_jclwk"]
 [ext_resource type="Shader" path="res://shaders/bokeh_paralax_background.gdshader" id="2_xgc46"]
@@ -58,6 +58,48 @@ corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_size = 4
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0lj4c"]
+content_margin_left = 5.0
+content_margin_top = 2.0
+content_margin_right = 5.0
+content_margin_bottom = 2.0
+bg_color = Color(2.5028e-06, 0.752938, 0.787498, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_size = 4
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jvca3"]
+content_margin_left = 5.0
+content_margin_top = 2.0
+content_margin_right = 5.0
+content_margin_bottom = 2.0
+bg_color = Color(4.81307e-07, 0.419766, 0.440075, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_size = 4
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eamgd"]
+content_margin_left = 5.0
+content_margin_top = 2.0
+content_margin_right = 5.0
+content_margin_bottom = 2.0
+bg_color = Color(0, 0.678431, 0.709804, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 shadow_color = Color(0, 0, 0, 0.25)
 shadow_size = 4
 shadow_offset = Vector2(0, 4)
@@ -347,3 +389,103 @@ layout_mode = 2
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 mouse_filter = 2
+
+[node name="Data" type="MarginContainer" parent="."]
+layout_mode = 1
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="CenterContainer" type="CenterContainer" parent="Data"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="Data/CenterContainer"]
+custom_minimum_size = Vector2(300, 150)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6w7rg")
+
+[node name="MarginContainer" type="MarginContainer" parent="Data/CenterContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Data/CenterContainer/PanelContainer/MarginContainer"]
+auto_translate_mode = 1
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Data/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+auto_translate_mode = 1
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.933333, 0.933333, 0.933333, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 18
+text = "DATA"
+
+[node name="HSeparator" type="HSeparator" parent="Data/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+auto_translate_mode = 1
+layout_mode = 2
+theme_override_constants/separation = 8
+theme_override_styles/separator = SubResource("StyleBoxEmpty_n1a0s")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Data/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 32
+alignment = 1
+
+[node name="DataSetContainer" type="VBoxContainer" parent="Data/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Data/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/DataSetContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.933333, 0.933333, 0.933333, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.25)
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 12
+text = "Data set"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OptionButton" type="OptionButton" parent="Data/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/DataSetContainer"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.933333, 0.933333, 0.933333, 1)
+theme_override_colors/font_disabled_color = Color(0.933333, 0.933333, 0.933333, 1)
+theme_override_colors/font_color = Color(0.933333, 0.933333, 0.933333, 1)
+theme_override_colors/font_focus_color = Color(0.933333, 0.933333, 0.933333, 1)
+theme_override_colors/font_pressed_color = Color(0.933333, 0.933333, 0.933333, 1)
+theme_override_colors/font_hover_color = Color(0.933333, 0.933333, 0.933333, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.933333, 0.933333, 0.933333, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/hover = SubResource("StyleBoxFlat_0lj4c")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jvca3")
+theme_override_styles/normal = SubResource("StyleBoxFlat_eamgd")
+selected = 0
+item_count = 1
+popup/item_0/text = "Half Circles"
+popup/item_0/id = 0
+
+[node name="SamplesContainer" type="VBoxContainer" parent="Data/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Data/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/SamplesContainer"]
+auto_translate_mode = 1
+layout_mode = 2
+theme_override_colors/font_color = Color(0.933333, 0.933333, 0.933333, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.25)
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 12
+text = "Samples"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SpinBox" type="SpinBox" parent="Data/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/SamplesContainer"]
+layout_mode = 2
+max_value = 50000.0
+value = 10000.0
+update_on_text_changed = true

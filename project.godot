@@ -17,7 +17,7 @@ config/icon="res://project/icon.svg"
 
 [autoload]
 
-AntialiasedLine2DTexture="*res://project/addons/antialiased_line2d/texture.gd"
+AntialiasedLine2DTexture="*res://addons/antialiased_line2d/texture.gd"
 
 [display]
 
@@ -32,7 +32,7 @@ movie_writer/movie_file="D:/Godot Games/NeuralNetVisualizer/movies/example.avi"
 
 [editor_plugins]
 
-enabled=PackedStringArray()
+enabled=PackedStringArray("res://addons/antialiased_line2d/plugin.cfg", "res://addons/easy_charts/plugin.cfg", "res://addons/gut/plugin.cfg")
 
 [rendering]
 

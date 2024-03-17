@@ -47,10 +47,12 @@ func predict(input:Matrix):
 
 	var result_data: Array[float] = []
 	for i in range(num_samples):
-		var output = input.get_row(i)
+		var output: Matrix = input.get_row(i)
 		for layer in layers:
 			output = layer.forward_propogation(output)
-		
+			if layer == layers[-1]:
+				output.data[0] = 0. if output.data[0] < 0.5 else 1.
+
 		result_data.append(output.data[0])
 
 	var result: Matrix = Matrix.new(1, num_samples, result_data)
@@ -81,18 +83,20 @@ func train_thread(input: Matrix, target: Matrix, epochs: int, learning_rate: flo
 		var outputs: Array[Array] = []
 		for i in range(num_samples):
 			# Forward pass
-			var output = input.get_row(i)
+			var output: Matrix = input.get_row(i)
 			outputs = [output.data]
 			for layer in layers:
 				output = layer.forward_propogation(output)
+				if layer == layers[-1]:
+					output.data[0] = 0. if output.data[0] < 0.5 else 1.
 				outputs.append(output.data)
 			
 			input_completed.emit(outputs)
-			var current_loss = loss_function.call(target.get_row(0), output)
+			var current_loss = loss_function.call(target.get_row(i), output)
 			epoch_loss += current_loss
 			
 			# Backward pass
-			var error = loss_derivative.call(target.get_row(0), output)
+			var error = loss_derivative.call(target.get_row(i), output)
 			var layers_reversed = layers.duplicate(true)
 			layers_reversed.reverse()
 			for layer in layers_reversed:

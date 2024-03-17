@@ -4,6 +4,7 @@ class_name FCNetwork extends Node
 @export var printing: bool = false
 
 # Get references
+@export var data_stop_layer: PanelContainer
 @export var stop_layer: PanelContainer
 @export var layer_container: LayerContainer
 @export var learning_rate_button: LearningRateButton
@@ -41,6 +42,10 @@ var buttons_to_enable: Array = []
 
 func _ready() -> void:
 	# Safety checks
+	if data_stop_layer == null:
+		push_error("Data stop layer not found")
+		return
+
 	if stop_layer == null:
 		push_error("Stop layer not found")
 		return
@@ -177,8 +182,10 @@ func training_completed():
 func set_mouse_filter():
 	if stop_layer.mouse_filter == Control.MOUSE_FILTER_IGNORE:
 		stop_layer.mouse_filter = Control.MOUSE_FILTER_STOP
+		data_stop_layer.mouse_filter = Control.MOUSE_FILTER_STOP
 	else:
 		stop_layer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		data_stop_layer.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 func test_network():
 	var out = net.predict(x_train)

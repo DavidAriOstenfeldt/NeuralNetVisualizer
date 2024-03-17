@@ -50,7 +50,7 @@ var smooth_domain: bool = false
 ## If you instead prefer to improve performances by completely remove older data from your Function
 ## object, consider calling the Function.remote_point(0) method before adding a new point and plotting
 ## again.
-var max_samples: int = 100
+var max_samples: int = 10000
 
 ## Dictionary of colors for all of the Chart elements.
 var colors: Dictionary = {

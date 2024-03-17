@@ -7,6 +7,12 @@ class_name ScatterPlot
 var f1: Function
 var f2: Function
 
+func _ready() -> void:
+	var data = HalfCirclesData.new()
+	data.generate(100, 0.1)
+	create_chart(data.data, data.labels, "Half Circles", "X", "Y")
+
+
 func create_chart(data: Matrix, labels: Matrix, title: String, x_label: String, y_label: String):
 	# Let's create our @x values
 	# var x: Array = ArrayOperations.multiply_float(range(-10, 11, 1), 0.5)
@@ -52,6 +58,8 @@ func create_chart(data: Matrix, labels: Matrix, title: String, x_label: String, 
 			x1.append(x[i])
 			y1.append(y[i])
 
+	chart.queue_redraw()
+
 	# Let's add values to our functions
 	f1 = Function.new(
 		x1, y1, "Class 0", # This will create a function with x and y values taken by the Arrays 
@@ -63,8 +71,11 @@ func create_chart(data: Matrix, labels: Matrix, title: String, x_label: String, 
 	)
 	f2 = Function.new(x2, y2, "Class 1", { color = Color("#ff6384"), marker = Function.Marker.CROSS })
 	
+	
+
 	# Now let's plot our data
 	chart.plot([f1, f2], cp)
+	
 	
 	# Uncommenting this line will show how real time data plotting works
 	# set_process(false)

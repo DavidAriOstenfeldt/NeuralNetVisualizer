@@ -158,7 +158,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_jclwk")
 
-[node name="FCNetwork" parent="." node_paths=PackedStringArray("stop_layer", "layer_container", "learning_rate_button", "epochs_button", "activation_function_button", "train_button", "train_progress_bar", "epoch_label") instance=ExtResource("13_i3p1h")]
+[node name="FCNetwork" parent="." node_paths=PackedStringArray("data_stop_layer", "stop_layer", "layer_container", "learning_rate_button", "epochs_button", "activation_function_button", "train_button", "train_progress_bar", "epoch_label") instance=ExtResource("13_i3p1h")]
+data_stop_layer = NodePath("../Data/Control/DataStopLayer")
 stop_layer = NodePath("../NetworkArchitecture/StopLayer")
 layer_container = NodePath("../NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/LayerContainer")
 learning_rate_button = NodePath("../NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer/LearningRateContainer/LearningRateButton")
@@ -403,6 +404,7 @@ horizontal_alignment = 1
 [node name="EpochsButton" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer/EpochContainer" instance=ExtResource("10_heli1")]
 layout_mode = 2
 size_flags_horizontal = 8
+selected = 1
 
 [node name="ActivationFunctionContainer" type="VBoxContainer" parent="NetworkArchitecture/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/BottomContainer"]
 custom_minimum_size = Vector2(100, 0)
@@ -530,8 +532,8 @@ vertical_alignment = 1
 [node name="SamplesSpinBox" type="SpinBox" parent="Data/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/SamplesContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-max_value = 50000.0
-value = 10000.0
+max_value = 10000.0
+value = 500.0
 update_on_text_changed = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Data/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/SamplesContainer"]
@@ -578,5 +580,18 @@ text = "Generate"
 [node name="ScatterPlot" parent="Data/CenterContainer/PanelContainer/MarginContainer/VBoxContainer" instance=ExtResource("14_1cdyb")]
 unique_name_in_owner = true
 layout_mode = 2
+
+[node name="Control" type="Control" parent="Data"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="DataStopLayer" type="PanelContainer" parent="Data/Control"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(350, 75)
+layout_mode = 2
+offset_top = 55.0
+offset_right = 350.0
+offset_bottom = 140.0
+mouse_filter = 2
 
 [connection signal="pressed" from="Data/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/GenerateDataButton" to="FCNetwork" method="_on_generate_data_button_pressed"]
